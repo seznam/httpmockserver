@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libhttpmockserver
+Description: C++ HTTP mock server library used for testing purposes.
+URL: [not yet]
+Version: @VERSION@
+Requires:
+Libs: -L${libdir} -lhttpmockserver -lmicrohttpd
+Libs.private:
+Cflags: -I${includedir}
