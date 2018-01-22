@@ -1,0 +1,61 @@
+/**
+ * \mainpage HTTP Mock Server
+ *
+ * HTTP mock server allows you to test HTTP clients easily.
+ *
+ * Basic information, such as requirements and installation steps, can be found at 
+ * <a href="https://github.com/seznam/httpmockserver/blob/master/README.md">Readme.md</a>
+ * file.
+ *
+ * \section basics_sec Classes provided
+ *
+ * - \ref httpmock::MockServer - class ready to be inhereted to define own
+ *   behaviour of \ref httpmock::MockServer::responseHandler() method.
+ * - \ref httpmock::TestEnvironment - Google Test environment class with
+ *   mockserver running inside.
+ *
+ * \subsection helperfunc_subsec Helper functions
+ *
+ * - \ref httpmock::getFirstRunningMockServer() - port searcher function,
+ *   trying to find free port to launch the server on.
+ *
+ * \section firststeps_sec First steps
+ *
+ * To create a simple test, you need to follow these steps:
+ * -# Derive class \ref httpmock::MockServer and implement
+ *    \ref httpmock::MockServer::responseHandler(). This method is invoked on
+ *    incomming requests.
+ * -# Start a server (several choices)
+ *    - Start a server manually by \ref httpmock::MockServer::start() or
+ *    - Use \ref httpmock::getFirstRunningMockServer() to get mockserver running
+ *      on first free port number, or
+ *    - Use \ref httpmock::createMockServerEnvironment() to get Google Test
+ *      Environment with running mockserver on first free port number available.
+ * -# Implement the test interacting with mockserver listening on
+ *    localhost. Mockserver port can be obtained using
+ *    \ref httpmock::MockServer::getPort() method, or with following code if
+ *    Google Test Environment is in use:
+ *    \code
+      // Mock is class derived from httpmock::IMockServer.
+      ::testing::Environment *const env = ::testing::AddGlobalTestEnvironment(
+          httpmock::createMockServerEnvironment<Mock>(serverStartingPortNumber));
+
+      httpmock::TestEnvironment<httpmock::MockServerHolder> *mock_server_env
+          = dynamic_cast<httpmock::TestEnvironment<httpmock::MockServerHolder> *>(env);
+
+      int port = mock_server_env->getMock()->getPort();
+ *    \endcode
+ *
+ * \subsection reqhandle_subsec Request handling
+ *
+ * Method \ref httpmock::MockServer::responseHandler() is responsible for
+ * request handling. Request arguments are passed as method arguments, which
+ * contains request path, method type, headers, POST data and URL arguments.
+ *
+ * After processing request, the \ref httpmock::MockServer::Response has to be
+ * returned. It contains response body and status.
+ *
+ * Custom headers can be added
+ * into the response object using \ref httpmock::MockServer::Response::addHeader()
+ * method, passing key-value \ref httpmock::MockServer::Header object instances.
+ */
