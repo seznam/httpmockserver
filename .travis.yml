@@ -1,10 +1,9 @@
 # This will run on Travis' 'new' container-based infrastructure
 sudo: false
 
-# Blacklist
 branches:
   only:
-    - doc-test
+    - master
 
 # Environment variables
 env:
@@ -32,4 +31,4 @@ deploy:
   github-token: $GITHUB_API_KEY
   local_dir: html
   on:
-    branch: doc-test
+    branch: master
