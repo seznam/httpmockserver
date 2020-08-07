@@ -8,6 +8,15 @@
 #include "httpmockserver/mock_server.h"
 
 
+// libmicrohttpd 0.9.71 brings incompatibility by changing int to enum.
+// Let's use MHD_RESULT instead - defined by libmicrohttpd version.
+#if MHD_VERSION >= 0x00097002
+#define MHD_RESULT enum MHD_Result
+#else
+#define MHD_RESULT int
+#endif
+
+
 namespace httpmock {
 
 
@@ -66,15 +75,16 @@ class MockServer::Server {
      * \param outputContainer  pointer to the std::vector<OutputType> container.
      */
     template <typename OutputType>
-    static int keyValueIterator(void *outputContainer, enum MHD_ValueKind,
-                                const char *key, const char *value);
+    static MHD_RESULT keyValueIterator(
+            void *outputContainer, enum MHD_ValueKind,
+            const char *key, const char *value);
 
     /**
      * Callback for MHD_AccessHandlerCallback().
      * \param cls  Server class instance pointer is passed and
      *             cls->handlerCallback() is called passing rest arguments.
      */
-    static int static_handlerCallback(
+    static MHD_RESULT static_handlerCallback(
             void *cls, struct MHD_Connection *connection,
             const char *url, const char *method, const char *version,
             const char *upload_data, size_t *upload_data_size, void **con_cls);
@@ -84,7 +94,7 @@ class MockServer::Server {
      * static_handlerCallback() for specific Server instance.
      * Parses MHD connection data and calls MockServer::responseHandler().
      */
-    int handlerCallback(
+    MHD_RESULT handlerCallback(
             struct MHD_Connection *connection,
             const char *url, const char *method, const char *version,
             const char *upload_data, size_t *upload_data_size, void **con_cls);
@@ -147,7 +157,7 @@ struct KeyValueIteratorTrait<MockServer::Header> {
 
 
 template <typename OutputType>
-int MockServer::Server::keyValueIterator(
+MHD_RESULT MockServer::Server::keyValueIterator(
         void *cls, enum MHD_ValueKind, const char *key, const char *value) {
     std::vector<OutputType> *collector
         = static_cast<std::vector<OutputType> *>(cls);
@@ -177,7 +187,7 @@ std::vector<OutputType> MockServer::Server::getConnectionArgs(
 }
 
 
-int MockServer::Server::static_handlerCallback(
+MHD_RESULT MockServer::Server::static_handlerCallback(
         void *cls, struct MHD_Connection *connection,
         const char *url, const char *method, const char *version,
         const char *upload_data, size_t *upload_data_size, void **con_cls)
@@ -187,7 +197,7 @@ int MockServer::Server::static_handlerCallback(
 }
 
 
-int MockServer::Server::handlerCallback(
+MHD_RESULT MockServer::Server::handlerCallback(
         MHD_Connection *connection,
         const char *url, const char *method, const char * /*version*/,
         const char *upload_data, size_t *upload_data_size, void **con_cls)
@@ -227,7 +237,7 @@ int MockServer::Server::handlerCallback(
     for (const Header &header: mockResponse.headers) {
         MHD_add_response_header(response, header.key.c_str(), header.value.c_str());
     }
-    int ret = MHD_queue_response(connection, mockResponse.status, response);
+    MHD_RESULT ret = MHD_queue_response(connection, mockResponse.status, response);
     MHD_destroy_response(response);
     return ret;
 }
