@@ -63,5 +63,5 @@ install(DIRECTORY ${HTTPMOCKSERVER_INCLUDE_DIRS}/httpmockserver
 # set pkg-config file
 set(prefix "${CMAKE_INSTALL_PREFIX}")
 configure_file("libhttpmockserver.pc.in" "libhttpmockserver.pc" @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/libhttpmockserver.pc DESTINATION lib/pkgconfig)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libhttpmockserver.pc DESTINATION lib/pkgconfig)
 
