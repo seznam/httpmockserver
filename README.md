@@ -16,6 +16,7 @@ CPR and GTest libraries are by default downloaded as git submodules, but it can 
 when following cmake options are used:
 
   * `-DUSE_SYSTEM_CPR=ON` - Use libcpr from system, do not build it from submodule. Default OFF.
+    * `-DUSE_SYSTEM_CURL=ON` - Use libcurl for libcpr from system, do not build it on its own. Default OFF.
   * `-DUSE_SYSTEM_GTEST=ON` - Use Google Test from system, do not build it from submodule. Default OFF.
   * `-DUSE_ALL_SYSTEM_LIBS=ON` - Use both libcpr and GTest libraries from system paths. Default OFF.
 
