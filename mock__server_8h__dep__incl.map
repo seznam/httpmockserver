@@ -1,5 +1,6 @@
-<map id="/home/travis/build/seznam/httpmockserver/include/httpmockserver/mock_server.h" name="/home/travis/build/seznam/httpmockserver/include/httpmockserver/mock_server.h">
-<area shape="rect" id="node2" href="$mock__server_8cc.html" title="/home/travis/build\l/seznam/httpmockserver\l/src/mock_server.cc" alt="" coords="5,131,188,187"/>
-<area shape="rect" id="node3" href="$mock__holder_8h.html" title="/home/travis/build\l/seznam/httpmockserver\l/include/httpmockserver\l/mock_holder.h" alt="" coords="212,124,395,195"/>
-<area shape="rect" id="node4" href="$test__environment_8h.html" title="/home/travis/build\l/seznam/httpmockserver\l/include/httpmockserver\l/test_environment.h" alt="" coords="276,243,459,313"/>
+<map id="/home/runner/work/httpmockserver/httpmockserver/include/httpmockserver/mock_server.h" name="/home/runner/work/httpmockserver/httpmockserver/include/httpmockserver/mock_server.h">
+<area shape="rect" id="node1" title=" " alt="" coords="287,5,573,61"/>
+<area shape="rect" id="node2" href="$mock__server_8cc.html" title=" " alt="" coords="5,117,263,158"/>
+<area shape="rect" id="node3" href="$mock__holder_8h.html" title=" " alt="" coords="287,109,573,165"/>
+<area shape="rect" id="node4" href="$test__environment_8h.html" title=" " alt="" coords="377,213,664,269"/>
 </map>
